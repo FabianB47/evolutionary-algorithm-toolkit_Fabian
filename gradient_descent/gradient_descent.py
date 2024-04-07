@@ -22,11 +22,14 @@ h = 0.01  # h of numerical derivate calculation
 step = 0.05  # t_k
 k = 0  # count
 
+
 # Gradient Descent
 while error > tol:
-    grad = (Objective(x[k]) - Objective(x[k] - h)) / h
-    x.append(x[k] - step * grad)
+    grad_n1= (Objective(x[k]) - Objective(x[k] - h)) / h
+    x.append(x[k] - step * grad_n1)
+    grad_n= (Objective(x[k + 1])- Objective(x[k + 1]- h))/h
     error = abs(x[k + 1] - x[k])  # to stop algorithm
+    step = abs(((x[k + 1])- x[k])*(grad_n - grad_n1))/(abs((grad_n - grad_n1))**2)
     k += 1
 
     # Plot
