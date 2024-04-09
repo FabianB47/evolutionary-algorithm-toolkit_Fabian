@@ -18,8 +18,8 @@ X, Y = np.meshgrid(x, y)
 Z = z_function(X, Y)
 
 point1 = (0.7, 0.4, z_function(0.7, 0.4))
-# point2 = (0.5, 0.3, z_function(0.5, 0.3))
-# point3 = (0.6, 0.1, z_function(0.6, 0.1))
+point2 = (-0.5, 0.5, z_function(0.5, 0.3))
+point3 = (0.6, 0.1, z_function(0.6, 0.1))
 
 learning_rate = 0.01
 
@@ -33,8 +33,18 @@ for _ in range(1000):
     X_new, Y_new= point1[0] - learning_rate * X_derivative, point1[1] - learning_rate * Y_derivative
     point1 = (X_new, Y_new, z_function(X_new, Y_new))
 
+    X_derivative, Y_derivative = calculate_gradient(point2[0], point2[1])
+    X_new, Y_new = point2[0] - learning_rate * X_derivative, point2[1] - learning_rate * Y_derivative
+    point2 = (X_new, Y_new, z_function(X_new, Y_new))
+
+    X_derivative, Y_derivative = calculate_gradient(point3[0], point3[1])
+    X_new, Y_new = point3[0] - learning_rate * X_derivative, point3[1] - learning_rate * Y_derivative
+    point3 = (X_new, Y_new, z_function(X_new, Y_new))
+
     ax.plot_surface(X, Y, Z, cmap="viridis", zorder=0)
     ax.scatter(point1[0], point1[1], point1[2], color = "magenta", zorder = 1)
+    ax.scatter(point2[0], point2[1], point2[2], color = "green", zorder = 1)
+    ax.scatter(point3[0], point3[1], point3[2], color = "cyan", zorder = 1)
     plt.pause(0.001)
     ax.clear()
 
